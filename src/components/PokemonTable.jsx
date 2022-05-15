@@ -4,9 +4,10 @@ import PokemonContext from "../PokemonContext";
 import { Paper, TableContainer, Table, TableHead, TableRow, TableCell, TableBody } from "@mui/material"
 
 function PokemonTable() {
-    const { filter, data, setSelectedPokemon } = useContext(PokemonContext);
+    const { state: { data, filter } } = useContext(PokemonContext);
+
     return (
-        <TableContainer component={Paper} sx={{ display: 'flex', mt: '2em' }}>
+        <TableContainer component={Paper} sx={{ display: 'flex', mt: '2em', minHeight: 600 }}>
             <Table >
                 <TableHead>
                     <TableRow>
@@ -25,7 +26,6 @@ function PokemonTable() {
                             <PokemonRow
                                 key={pokemon.id}
                                 pokemon={pokemon}
-                                onInfo={(pokemon) => setSelectedPokemon(pokemon)}
                             />
                         ))}
                 </TableBody>

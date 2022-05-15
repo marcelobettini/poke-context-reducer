@@ -1,36 +1,49 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useReducer } from "react";
 import PokemonContext from "./PokemonContext";
+const pokemonReducer = (state, action) => {
+  switch (action.type) {
+    case 'SET_FILTER':
+      return {
+        ...state,
+        filter: action.payload
+      }
+    case 'SET_DATA':
+      return {
+        ...state,
+        data: action.payload
+      }
+    case 'SET_SELECTED_POKEMON':
+      return {
+        ...state,
+        selectedPokemon: action.payload
+      }
+    default:
+      state
+  }
+}
 import PokemonTable from "./components/PokemonTable";
 import PokemonFilter from "./components/PokemonFilter";
 import PokemonInfo from "./components/PokemonInfo";
-
 import "./App.css";
 
-
-
 function App() {
-  //todo este estado lo pasaremos a través del Context.Provider en el código jsx
-  const [data, setData] = useState([])
-  const [filter, setFilter] = useState("");
-  const [selectedPokemon, setSelectedPokemon] = useState(null);
+  const [state, dispatch] = useReducer(pokemonReducer, { data: [], filter: "", selectedPokemon: null })
 
-  //con Vite basta con poner el archivo en la carpeta exterior, con webpack habría que incluirla en la carpeta public
   useEffect(() => {
     fetch("http://localhost:3000/pokemon.json")
       .then(res => res.json())
-      .then(data => setData(data))
+      .then(data => dispatch({
+        type: 'SET_DATA',
+        payload: data,
+      }))
   }, [])
-
-  if (!data) {
+  if (!state.data) {
     return <div>Fetching Pokemons...</div>;
   }
   return (
-    <PokemonContext.Provider value={{
-      data, setData, filter, setFilter, selectedPokemon, setSelectedPokemon
-    }
-    }>
+    <PokemonContext.Provider value={{ state, dispatch }}>
       <div style={{ margin: 'auto', display: "flex", flexDirection: "column", width: '60vw' }}>
-        <h1 className="title">Pokemon Search</h1>
+        <h1>Pokemon Search</h1>
         <PokemonFilter />
         <div
           style={{
@@ -41,14 +54,10 @@ function App() {
           }}
         >
           <PokemonTable />
-
-          {/* solo si hay un selectedPokemon vamos a mostrar el componente */}
-          {selectedPokemon && <PokemonInfo onDismiss={() => setSelectedPokemon(null)} {...selectedPokemon} />}
+          <PokemonInfo />
         </div>
       </div >
     </PokemonContext.Provider >
-
   );
 }
-
 export default App;
