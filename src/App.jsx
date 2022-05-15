@@ -49,7 +49,7 @@ function App() {
           style={{
             display: "grid",
             gridTemplateColumns: "3fr 1fr",
-            alignItems: 'center',
+            marginTop: '2em',
             gap: "1.5rem",
           }}
         >

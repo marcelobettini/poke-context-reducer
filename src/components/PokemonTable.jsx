@@ -7,12 +7,12 @@ function PokemonTable() {
     const { state: { data, filter } } = useContext(PokemonContext);
 
     return (
-        <TableContainer component={Paper} sx={{ display: 'flex', mt: '2em', minHeight: 600 }}>
+        <TableContainer component={Paper} >
             <Table >
                 <TableHead>
                     <TableRow>
-                        <TableCell align="center">Name</TableCell>
-                        <TableCell align="center">Type</TableCell>
+                        <TableCell >Name</TableCell>
+                        <TableCell >Type</TableCell>
                         <TableCell align="center">Action</TableCell>
                     </TableRow>
                 </TableHead>
