@@ -30,7 +30,7 @@ function App() {
   const [state, dispatch] = useReducer(pokemonReducer, { data: [], filter: "", selectedPokemon: null })
 
   useEffect(() => {
-    fetch("https://find-poke-react.herokuapp.com/dist/pokemon.json")
+    fetch("/api/pokemon.json")
       .then(res => res.json())
       .then(data => dispatch({
         type: 'SET_DATA',
