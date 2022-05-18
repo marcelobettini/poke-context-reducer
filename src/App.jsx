@@ -30,7 +30,8 @@ function App() {
   const [state, dispatch] = useReducer(pokemonReducer, { data: [], filter: "", selectedPokemon: null })
 
   useEffect(() => {
-    fetch("http://localhost:3000/pokemon.json")
+    // para el build: https://reactheadless.000webhostapp.com/pokemon.json
+    fetch('http://localhost:3000/pokemon.json')
       .then(res => res.json())
       .then(data => dispatch({
         type: 'SET_DATA',
